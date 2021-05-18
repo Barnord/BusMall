@@ -1,6 +1,7 @@
 'use strict'
 
 const data = document.getElementById('data')
+const dataChart = document.getElementById('chart')
 const results = document.getElementById('results')
 const productContainer = document.getElementById('productContainer')
 const productOneh2 = document.getElementById('productOneh2')
@@ -11,6 +12,11 @@ const productThreeh2 = document.getElementById('productThreeh2')
 const productThreeImg = document.getElementById('productThreeImg')
 
 let voteCounter = 0;
+
+let votesAr = [];
+let showsAr = [];
+let namesAr = [];
+let labelColors = [];
 
 let currentProductOne = null;
 let currentProductTwo = null;
@@ -112,14 +118,56 @@ function handleClick(e) {
 
 function displayResults() {
   renderResults();
+  getDataSets();
+  renderViewChart();
   data.removeEventListener('click', displayResults)
+}
+
+function getDataSets() {
+  votesAr = [];
+  showsAr = [];
+  labelColors = [];
+  for (let product of Product.allProducts) {
+    namesAr.push(product.name)
+    votesAr.push(product.votes)
+    showsAr.push(product.shown)
+  }
+  for (let i=0; i<Product.allProducts.length; i++)
+    if (i%2 === 0) {
+      labelColors.push('rgba(104, 217, 134, 0.2)')
+    } else {
+      labelColors.push('rgba(213, 217, 104, 0.2)')
+    }
+}
+
+function renderViewChart() {
+  const myChart = new Chart(dataChart,  {
+    type: 'bar',
+    data: {
+      labels: namesAr,
+      datasets: [{
+        label: '# of Votes',
+        data: votesAr,
+        backgroundColor: labelColors
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
 }
 
 productContainer.addEventListener('click', handleClick)
 
 new Product('R2D2 Suitcase', './assets/bag.jpg' );
 new Product('Banana Cutter', './assets/banana.jpg');
-new Product('TP Tablet Holder', './assets/bathroom.jpg');
+new Product('Swipe & Wipe', './assets/bathroom.jpg');
 new Product('Toeless Rainboots', './assets/boots.jpg');
 new Product('All-in-one Breakfast Maker', './assets/breakfast.jpg');
 new Product('Meatball Bubble Gum', './assets/bubblegum.jpg');
