@@ -39,18 +39,27 @@ function renderThreeProducts(productOne, productTwo, productThree) {
 }
 
 function pickProducts() {
-  const productOneIndex = Math.floor(Math.random() * Product.allProducts.length);
-  let productTwoIndex;
-  while (productTwoIndex === undefined || productTwoIndex === productOneIndex) {
-    productTwoIndex = Math.floor(Math.random() * Product.allProducts.length);
+  const usedProducts = [];
+  usedProducts.push(currentProductOne);
+  usedProducts.push(currentProductTwo);
+  usedProducts.push(currentProductThree);
+
+  while (usedProducts.includes(currentProductOne)) {
+    let productOneIndex = Math.floor(Math.random() * Product.allProducts.length);
+    currentProductOne = Product.allProducts[productOneIndex];
   }
-  let productThreeIndex;
-  while (productThreeIndex === undefined || productThreeIndex === productOneIndex || productThreeIndex === productTwoIndex) {
-    productThreeIndex = Math.floor(Math.random() * Product.allProducts.length);
+  usedProducts.push(currentProductOne)
+
+  while (usedProducts.includes(currentProductTwo)) {
+    let productTwoIndex = Math.floor(Math.random() * Product.allProducts.length);
+    currentProductTwo = Product.allProducts[productTwoIndex];
   }
-  currentProductOne = Product.allProducts[productOneIndex];
-  currentProductTwo = Product.allProducts[productTwoIndex];
-  currentProductThree = Product.allProducts[productThreeIndex];
+  usedProducts.push(currentProductTwo)
+
+  while (usedProducts.includes(currentProductThree)) {
+    let productThreeIndex = Math.floor(Math.random() * Product.allProducts.length);
+    currentProductThree = Product.allProducts[productThreeIndex];
+  }
   currentProductOne.shown++;
   currentProductTwo.shown++;
   currentProductThree.shown++;
