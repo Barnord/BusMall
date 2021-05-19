@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link type="stylesheet" href=".css/reset.css" type="text/css">
-    <link type="stylesheet" href=".css/style.css" type="text/css">
+    <link rel="stylesheet" href="./css/reset.css" type="text/css">
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
   </head>
   <body>
     <header></header>
     <main>
       <aside>
-        <div id="data"></div>
+        <div id="data">
+          <div id="buttonDiv"></div>
+          <canvas id="chart"></canvas>
+        </div>
         <ul id="results"></ul>
       </aside>
       <section id="productContainer">
@@ -27,6 +30,7 @@
       </section>
     </main>
     <footer></footer>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
     <script src="./js/app.js"></script>
   </body>
 </html>
