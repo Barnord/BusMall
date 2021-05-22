@@ -23,7 +23,7 @@ let currentProductOne = null;
 let currentProductTwo = null;
 let currentProductThree = null;
 
-function Product(name, imgPath, shown, votes) {
+function Product(name, imgPath, shown, votes) { // Creates products for use throughout this app, pushes into an array of only products
   this.name = name;
   this.imgPath = imgPath;
   this.shown = shown;
@@ -34,18 +34,18 @@ function Product(name, imgPath, shown, votes) {
 
 Product.allProducts = [];
 
-Product.prototype.renderProduct = function(h2, imageTag) {
+Product.prototype.renderProduct = function(h2, imageTag) { //displays a product
   imageTag.src = this.imgPath;
   h2.textContent = this.name;
 }
 
-function renderThreeProducts(productOne, productTwo, productThree) {
+function renderThreeProducts(productOne, productTwo, productThree) { // displays three products
   productOne.renderProduct(productOneh2, productOneImg);
   productTwo.renderProduct(productTwoh2, productTwoImg);
   productThree.renderProduct(productThreeh2, productThreeImg);
 }
 
-function pickProducts() {
+function pickProducts() { // chooses products to display, and insures that a product from the previous rotation doesn't reappear in the current rotation.
   const usedProducts = [];
   usedProducts.push(currentProductOne);
   usedProducts.push(currentProductTwo);
@@ -72,7 +72,7 @@ function pickProducts() {
   currentProductThree.shown++;
 }
 
-function renderResults() {
+function renderResults() { // renders the list from this batch of results.
   results.innerHTML = '';
   const h2Elem = document.createElement('h2')
   h2Elem.textContent = 'Results';
@@ -84,18 +84,18 @@ function renderResults() {
   }
 }
 
-function makeButton() {
-  const button = document.createElement('button');
-  button.addEventListener('click', displayResults)
-  button.textContent = 'View Data';
-  buttonDiv.appendChild(button);
-}
+// function makeButton() { // creates a button with a corresponding listener to view data
+//   const button = document.createElement('button');
+//   button.addEventListener('click', displayResults)
+//   button.textContent = 'View Data';
+//   buttonDiv.appendChild(button);
+// }
 
-function handleClick(e) {
+function handleClick(e) { // insures people click the images, sets number of votes a person gets, and tracks how many times a product has been voted on.
   console.log('working')
   let clickedItem = e.target;
   console.log(clickedItem);
-  if (voteCounter < 5) {
+  if (voteCounter < 25) {
     if (clickedItem === productOneImg || clickedItem === productTwoImg || clickedItem === productThreeImg) {
       voteCounter++;
       if (clickedItem === productOneImg) {
@@ -112,20 +112,23 @@ function handleClick(e) {
     }
   } else {
       productContainer.removeEventListener('click', handleClick);
-      makeButton();
+      // makeButton();
+      data.setAttribute('class', '');
+      displayResults();
   }
 }
 
-function displayResults() {
+function displayResults() { // shows the results of all data collection
   buttonDiv.innerHTML = ''
   updateStorage();
   renderResults();
   getDataSets();
   renderViewChart();
   data.removeEventListener('click', displayResults)
+  productContainer.setAttribute('class', 'hide')
 }
 
-function getDataSets() {
+function getDataSets() { // prepares necessary data & arrays for chart
   votesAr = [];
   showsAr = [];
   labelColors = [];
@@ -142,7 +145,7 @@ function getDataSets() {
     }
 }
 
-function renderViewChart() {
+function renderViewChart() { // prints the chart with collected data
   const myChart = new Chart(dataChart,  {
     type: 'bar',
     data: {
@@ -165,12 +168,12 @@ function renderViewChart() {
   });
 }
 
-function updateStorage() {
+function updateStorage() { // stores all product data to local storage.
   const stringifiedProducts = JSON.stringify(Product.allProducts);
   localStorage.setItem('products', stringifiedProducts);
 }
 
-function callStorage() {
+function callStorage() { // pulls collected data from previous sessions out of local storage.
   let returnedProducts = localStorage.getItem('products');
   if (returnedProducts) {
     let parsedProducts = JSON.parse(returnedProducts);
