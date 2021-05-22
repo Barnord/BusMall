@@ -1,13 +1,24 @@
-/* #data {
-  height: 100px
-} */
-
 body {
   background-color:whitesmoke;
 }
 
+header {
+  padding: 1em;
+  border-bottom: 5px solid darkslategrey;
+  border-top: 5px solid darkslategrey;
+}
+
 #one>* {
   display: inline;
+  margin: 0 auto;
+}
+
+#one {
+  margin: 0 auto;
+}
+
+#buttonDiv {
+  margin: 0 auto;
 }
 
 div {
@@ -22,12 +33,17 @@ h1 {
 h2 {
   font-size: 2em;
   display: inline;
+  margin: 0 auto;
 }
 
 #chartDiv {
   width: 60%;
-  /* margin: 0 auto; */
+  float: right;
 }
+
+/* #results {
+  margin: 0 auto;
+} */
 
 li {
   width: 400px;
@@ -39,9 +55,9 @@ img {
   margin: 10px;
 }
 
-body * {
+/* body * {
   border: 1px red solid;
-}
+} */
 
 #productContainer>* {
   display: inline;
@@ -64,4 +80,8 @@ body * {
   display: flex;
   width: 90%;
   margin: 0 auto;
+}
+
+.hide {
+  display:none!important;
 }
